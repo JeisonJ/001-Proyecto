@@ -132,6 +132,8 @@ class User {
         $stmt = $this->connection->prepare( $query );
         $stmt->bindParam(':reseller', $this->reseller_name, PDO::PARAM_STR);
         $stmt->execute();
+
+        return $stmt;
     }
 
 
@@ -140,7 +142,7 @@ class User {
     function number_users_created() {
 
         $query =  "
-            SELECT COUNT(*) as totalteller 
+            SELECT COUNT(*) as total_created 
             FROM frpusers 
             WHERE reseller = :reseller;
         ";
@@ -149,6 +151,8 @@ class User {
         $stmt = $this->connection->prepare( $query );
         $stmt->bindParam(':reseller', $this->reseller_name, PDO::PARAM_STR);
         $stmt->execute();
+
+        return $stmt;
     }
 
 }
