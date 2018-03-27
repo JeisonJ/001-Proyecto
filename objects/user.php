@@ -5,12 +5,12 @@ class User {
     private $connection;
     private $table_name = "frpusers";
 
-    private $user_id;
-    private $user;
-    private $password;
-    private $credits;
-    private $reseller;
-    private $lastuid;
+    public $user_id;
+    public $user_name;
+    public $password;
+    public $credits;
+    public $reseller_name;
+    public $lastuid;
 
 
     public function __construct($db) {
@@ -34,8 +34,48 @@ class User {
 
         // Prepare query.
         $stmt = $this->connection->prepare( $query );
-        $stmt->bindParam(':username', $this->reseller, PDO::PARAM_STR);
+        $stmt->bindParam(':username', $this->user_name, PDO::PARAM_STR);
         $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    /**
+     * Finalizar sesión.
+     * @todo Determinar como será su uso.
+     */
+    function logout() {}
+
+
+    // Obtener estadisticas de un reseller, creditos dado su nombre.
+    function read_one_user() {
+
+        $query = "
+            SELECT id, user, password, credits, reseller, lastuid
+            FROM frpusers 
+            WHERE user = :user;
+        "; // AND password   = :password
+
+        // Prepare query.
+        $stmt = $this->connection->prepare( $query );
+        $stmt->bindParam(':user', $this->user_name, PDO::PARAM_STR);
+        // $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+
+    // Obtener todos los reseller.
+    function read_all_users() {
+
+        $query = "
+            SELECT id, user, password, credits, reseller, lastuid
+            FROM frpusers;
+        ";
+
+        $stmt = $this->connection->prepare( $query );
         $stmt->execute();
 
         return $stmt;
@@ -59,16 +99,16 @@ class User {
         $stmt = $this->connection->prepare( $query );
 
         // Sanitize.
-        $this->user     = htmlspecialchars(strip_tags($this->user));
+        $this->user     = htmlspecialchars(strip_tags($this->user_name));
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->credits  = htmlspecialchars(strip_tags($this->credits));
         $this->reseller = htmlspecialchars(strip_tags($this->reseller));
 
         // Asignando los valores que requiere el query.
-        $stmt->bindParam(':username', $this->user,     PDO::PARAM_STR);
+        $stmt->bindParam(':username', $this->user_name,PDO::PARAM_STR);
         $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
         $stmt->bindParam(':credits',  $this->credits,  PDO::PARAM_INT);
-        $stmt->bindParam(':reseller', $this->reseller, PDO::PARAM_STR);
+        $stmt->bindParam(':reseller', $this->reseller_name,PDO::PARAM_STR);
 
         // Ejecutando query.
         if($stmt->execute()) {
@@ -79,7 +119,7 @@ class User {
     }
 
 
-        // Obtener usuarios según un reseller dado.
+    // Obtener todos los usuarios según un reseller dado.
     function reseller_agreement_userlist() {
 
         $query = "

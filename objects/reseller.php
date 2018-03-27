@@ -2,8 +2,8 @@
 
 class Reseller {
     // Conexión a la base de datos y nombre de la tabla.
-    public $connection;
-    public $table_name = "reseller";
+    private $connection;
+    private $table_name = "reseller";
 
     public $reseller_id;
     public $reseller_name;
@@ -70,7 +70,7 @@ class Reseller {
 
 
     // Obtener todos los reseller.
-    function read_all_reseller() {
+    function read_all_resellers() {
 
         $query = "
             SELECT id, reseller, credits, lastlogon, status

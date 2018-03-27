@@ -17,39 +17,44 @@ $database = new Database;
 $db       = $database->getConnection();
 
 // Initialize object.
-$reseller = new Reseller($db);
+$user = new User($db);
+
 
 // Indica el parametro USERNAME and PASSWORD a consultar.
-$reseller->reseller_name = isset($_GET['username']) ? $_GET['username'] : die();
-$reseller->password = isset($_GET['password']) ? $_GET['password'] : die();
+$user->user_name = isset($_GET['username']) ? $_GET['username'] : die();
 
-// Ejecutar Query para iniciar sesión.
-$stmt = $reseller->login_reseller();
+
+// Ejecutar Query para obtener estadisticas de un reseller, 
+// creditos, datos en general dado su nombre.
+$stmt = $user->read_one_user();
 // Devuelve el numero de filas.
 $num  = $stmt->rowCount();
 
-
 // Comprobar si se obtuvieron resultados en la consulta.
 if ($num > 0) {
-    
+    $resultados["user_info"] = array();
+
     // Recuperar contenido de la consulta.
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         
-            $reseller_name = $row["reseller"];
-            $reseller_pass = $row["password"];
-            // Aquí es donde hago uso de SESSION y redirijo al panel.
-            // session_start();
-            // $_SESSION["reseller_name"] = $reseller_name;
-            // $_SESSION["reseller_pass"] = $reseller_pass;
-            // header('Location: hola.php');
+        $resultados["user_info"] = array(
+            $user_id        = $row["id"],
+            $user_name      = $row["user"],
+            $user_pass      = $row["password"],
+            $user_credits   = $row["credits"],
+            $user_reseller  = $row["reseller"],
+            $user_lastuid   = $row["lastuid"]
+        );
+
+        //array_push($resultados["reseller_info"], $resultados_item);
     }
 
-    echo json_encode(
-        array('message' => "Bienvenido! " . $reseller_name)
-    );
+    echo json_encode($resultados);
 
 } else {
     echo json_encode(
-        array('message' => "Error al iniciar sesión, usuario o contraseña incorrectos.")
+        array('message' => "No se encontraron resultados.")
     );
 }
+
+
