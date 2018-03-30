@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>Portfolio | Home</title>
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1"/>
+    <link rel="stylesheet" href="http://localhost:4000/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:300,400,500"/>
+    <link rel="stylesheet" href="assets/css/fontello.css"/>
+    <link rel="stylesheet" href="assets/css/styles2.css"/>
+  </head>
+  <body>
+    <div class="container-login flex-center">
+      <div class="form__content box__shadow">
+        <form action="../reseller/login.php" method="post">
+          <div class="form-title">
+            <h3>Login to your acount</h3>
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" type="text" name="username" aria-describedby="username" placeholder="Username"/><small class="form-text text-muted" id="emailHelp">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" placeholder="Password"/>
+          </div>
+          <input class="btn btn-primary btn-block" type="submit" name="btn-login" value="Login"/>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="http://localhost:4000/assets/js/jquery-3.1.1.min.js"></script>
+  <script src="http://localhost:4000/assets/js/tether.min.js"></script>
+  <script src="http://localhost:4000/assets/js/bootstrap.js"></script>
+</html>

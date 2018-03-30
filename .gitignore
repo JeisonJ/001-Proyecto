@@ -6,3 +6,9 @@ prepros-6.config
 # Archivos de prueba
 procesar.php
 reseller/hola.php
+
+## pug/scss
+/public/dev
+
+## Visual Estudio code
+*.code-workspace

@@ -52,12 +52,12 @@ if (isset($_POST['btn-login'])) {
                     session_start();
                     $_SESSION["reseller_name"] = $reseller_name;
                     $_SESSION["reseller_pass"] = $reseller_pass;
-                    header('Location: hola.php');
+                    header('Location: ../public/dashboard.html');
             }
 
-            // echo json_encode(
-            //     array('message' => "Bienvenido! " . $reseller_name)
-            // );
+            echo json_encode(
+                array('message' => "Bienvenido! " . $reseller_name)
+            );
 
         } else {
             echo json_encode(
@@ -72,5 +72,5 @@ if (isset($_POST['btn-login'])) {
      * el navegador no se cumplira la condicion planteada en
      * el if por lo tanto se redirige al usuario a index.php
      */
-    header('Location: index.html');
+    header('Location: ../index.php');
 }
