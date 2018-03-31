@@ -1,3 +1,24 @@
+<?php
+
+    // PHP_HERE
+
+    // Recuperando la sesión.
+    session_start();
+
+    /**
+     * Validar si la variable $_SESSION['session_start'] a sido inicializada a TRUE.
+     * 
+     * if $_SESSION['session_start'] == TRUE
+     *      imprime "Bienvenido"
+     * else
+     *      redirige al login
+     */
+    ($_SESSION['session_start']) ?  : header('Location: ../index.php');
+
+    // Datos para la tabla ultimos usuarios.
+    // include_once '../user/read_one.php';
+    // $last_users_added = json_decode(get_last_users_added($_SESSION["reseller_name"], 5));
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -16,12 +37,23 @@
           <div class="logo">
             <h2>Dashboard</h2>
           </div>
-          <nav class="menu d-flex d-sm-block justify-content-center flex-wrap"><a href="dashboard.html"> <i class="icon-home"></i><span>Home</span></a><a href="read_users.html"> <i class="icon-users"></i><span>Users</span></a><a href="#"> <i class="icon-cog"></i><span>Configuration</span></a><a href="#"> <i class="icon-login"></i><span>Logout</span></a></nav>
+          <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+            <a href="dashboard.php"> <i class="icon-home"></i><span>Home</span></a>
+            <a href="read_users.php"> <i class="icon-users"></i><span>Users</span></a>
+            <a href="#"> <i class="icon-cog"></i><span>Configuration</span></a>
+            <a href="#"> <i class="icon-login"></i><span>Logout</span></a></nav>
         </div>
         <main class="col">
           <div class="row">
             <div class="col-12 bienvenida mb-5 p-2">
-              <h3>Welcome <span id="current user"><strong>Jeison</strong></span>, to the Reseller Portal...</h3>
+              <h3>Welcome 
+                <span id="current user">
+                    <strong>
+                        <?php 
+                            // PHP_HERE 
+                            echo $_SESSION["reseller_name"];
+                        ?>
+                    </strong>
             </div>
             <div class="columna col-lg-7">
               <div class="widget nueva_entrada">
@@ -37,7 +69,12 @@
                 <h4 class="titulo">Available credits</h4>
                 <div class="contenedor d-flex flex-wrap">
                   <div class="caja">
-                    <h3>15.258</h3>
+                    <h3>
+                      <?php 
+                          // PHP_HERE 
+                          echo $_SESSION['reseller_credits'];
+                      ?>
+                    </h3>
                     <p>Credits</p>
                   </div>
                 </div>

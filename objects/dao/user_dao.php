@@ -1,6 +1,6 @@
 <?php
 
-class User {
+class UserDAO {
     // Conexión a la base de datos y nombre de la tabla.
     private $connection;
     private $table_name = "frpusers";
@@ -134,6 +134,76 @@ class User {
         $stmt->execute();
 
         return $stmt;
+    }
+
+
+    // Obtener todos los usuarios según un reseller dado.
+    function last_users_added($limit) {
+
+        $query = "
+            SELECT id, user, password, credits, reseller, lastuid 
+            FROM frpusers 
+            WHERE  reseller = :reseller
+            ORDER BY id DESC LIMIT :limit;
+        "; // ORDER BY credits DESC";"
+
+        // Prepare query.
+        $stmt = $this->connection->prepare( $query );
+        $stmt->bindParam(':reseller', $this->reseller_name, PDO::PARAM_STR);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt;
+    }
+
+    /**
+     * Obtener una cantidad de registro limitado por los 
+     * parametros dados.
+     *
+     * @param [int]    $from_record_num  - Mostrar registros a partir del numero de indicado.
+     * @param [int]    $records_per_page - Devolver solo la cantidad de registros indicados.
+     * @return [array] $stmt - Resultados obtenidos en la consulta.
+     */
+    public function readPaging($from_record_num, $records_per_page){
+    
+        // select query
+        $query = "
+            SELECT id, user, password, credits, reseller, lastuid 
+            FROM " . $this->table_name . "
+            WHERE  reseller = :reseller
+            ORDER BY id DESC 
+            LIMIT :desde, :hasta;
+        ";
+    
+       // prepare query statement
+       $stmt = $this->connection->prepare( $query );
+    
+       // bind variable values
+       $stmt->bindParam(':reseller', $this->reseller_name, PDO::PARAM_STR);
+       $stmt->bindParam(':desde', $from_record_num, PDO::PARAM_INT);
+       $stmt->bindParam(':hasta', $records_per_page, PDO::PARAM_INT);
+    
+       // execute query
+       $stmt->execute();
+    
+       // return values from database
+       return $stmt;
+   }
+
+   // used for paging products
+    public function count(){
+        $query = "
+            SELECT COUNT(*) as total_rows 
+            FROM " . $this->table_name . "
+            WHERE  reseller = :reseller;
+        ";
+    
+        $stmt = $this->connection->prepare( $query );
+        $stmt->bindParam(':reseller', $this->reseller_name, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $row['total_rows'];
     }
 
 

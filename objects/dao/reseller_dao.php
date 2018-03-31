@@ -1,6 +1,6 @@
 <?php
 
-class Reseller {
+class ResellerDAO {
     // Conexión a la base de datos y nombre de la tabla.
     private $connection;
     private $table_name = "reseller";

@@ -1,3 +1,25 @@
+<?php
+
+    // PHP_HERE
+
+    // Recuperando la sesión.
+    session_start();
+
+    /**
+     * Validar si la variable $_SESSION['session_start'] a sido inicializada a TRUE.
+     * 
+     * if $_SESSION['session_start'] == TRUE
+     *      imprime "Bienvenido"
+     * else
+     *      redirige al login
+     */
+    ($_SESSION['session_start']) ?  : header('Location: ../index.php');
+
+    // Datos para la tabla ultimos usuarios.
+    // include_once '../user/read_one.php';
+    // $last_users_added = json_decode(get_last_users_added($_SESSION["reseller_name"], 5));
+    $current_user = $_SESSION['reseller_name'];
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -16,12 +38,24 @@
           <div class="logo">
             <h2>Dashboard</h2>
           </div>
-          <nav class="menu d-flex d-sm-block justify-content-center flex-wrap"><a href="dashboard.html"> <i class="icon-home"></i><span>Home</span></a><a href="read_users.html"> <i class="icon-users"></i><span>Users</span></a><a href="#"> <i class="icon-cog"></i><span>Configuration</span></a><a href="#"> <i class="icon-login"></i><span>Logout</span></a></nav>
+          <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
+            <a href="dashboard.php"> <i class="icon-home"></i><span>Home</span></a>
+            <a href="read_users.php"> <i class="icon-users"></i><span>Users</span></a>
+            <a href="#"> <i class="icon-cog"></i><span>Configuration</span></a><a href="#"> 
+            <i class="icon-login"></i><span>Logout</span></a></nav>
         </div>
         <main class="col">
           <div class="row">
             <div class="col-12 bienvenida mb-5 p-2">
-              <h3>Welcome <span id="current user"><strong>Jeison</strong></span>, to the Reseller Portal...</h3>
+              <h3>Welcome  
+                <span id="current user">
+                    <strong>
+                        <?php 
+                            // PHP_HERE 
+                            echo $_SESSION["reseller_name"];
+                        ?>
+                    </strong>
+                </span>, to the Reseller Portal...</h3>
             </div>
             <div class="columna col-lg-12">
               <div class="widget nueva_entrada">
@@ -29,7 +63,7 @@
                 <hr/>
                 <div class="information d-flex justify-content-between">
                   <p>Create end-users for our Services.</p>
-                  <div class="boton"><a class="btn btn-primary" href="create_user.html">Generate users </a></div>
+                  <div class="boton"><a class="btn btn-primary" href="create_user.php">Generate users </a></div>
                 </div>
                 <h4 class="titulo">List of created users</h4>
                 <hr/>
@@ -43,49 +77,16 @@
                         <th scope="col">Credits</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Mark</th>
-                        <th>*sd*f*3</th>
-                        <th>245</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Jacob</th>
-                        <th>143124*3</th>
-                        <th>25</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Larry</th>
-                        <th>afaf*3</th>
-                        <th>85</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Mark</th>
-                        <th>*sd*f*3</th>
-                        <th>245</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Jacob</th>
-                        <th>143124*3</th>
-                        <th>25</th>
-                      </tr>
+                    <tbody id="users_list">
+                      
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
             <div class="columna col-g-12">
-              <nav aria-label="Page navigation">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="">1</a></li>
-                  <li class="page-item"><a class="page-link" href="">2</a></li>
-                  <li class="page-item"><a class="page-link" href="">Next</a></li>
+              <nav aria-label="Page navigation" class="pages">
+                <ul class="pagination" id="pagination_here">
                 </ul>
               </nav>
             </div>
@@ -97,4 +98,12 @@
   <script src="http://localhost:4000/assets/js/jquery-3.1.1.min.js"></script>
   <script src="http://localhost:4000/assets/js/tether.min.js"></script>
   <script src="http://localhost:4000/assets/js/bootstrap.js"></script>
+
+  <!--  -->
+  <script>
+      // Metodo momentaneo para obtener el nombre del usuario actual.
+      var current_user ='<?php echo isset($_SESSION["reseller_name"]) ? $_SESSION["reseller_name"] : null; ?>';
+  </script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/read_users.js"></script>
 </html>
