@@ -26,7 +26,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <title>Portfolio | Home</title>
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1"/>
-    <link rel="stylesheet" href="http://localhost:4000/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/normalize-8.0.0.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:300,400,500"/>
     <link rel="stylesheet" href="assets/css/fontello.css"/>
     <link rel="stylesheet" href="assets/css/styles2.css"/>
@@ -95,9 +96,9 @@
       </div>
     </div>
   </body>
-  <script src="http://localhost:4000/assets/js/jquery-3.1.1.min.js"></script>
-  <script src="http://localhost:4000/assets/js/tether.min.js"></script>
-  <script src="http://localhost:4000/assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery-3.1.1.min.js"></script>
+  <script src="assets/js/tether.min.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
 
   <!--  -->
   <script>

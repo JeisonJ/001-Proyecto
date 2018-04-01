@@ -25,7 +25,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
     <title>Portfolio | Home</title>
     <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1"/>
-    <link rel="stylesheet" href="http://localhost:4000/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href="assets/css/normalize-8.0.0.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto:300,400,500"/>
     <link rel="stylesheet" href="assets/css/fontello.css"/>
     <link rel="stylesheet" href="assets/css/styles2.css"/>
@@ -69,7 +70,7 @@
                 <h4 class="titulo">Available credits</h4>
                 <div class="contenedor d-flex flex-wrap">
                   <div class="caja">
-                    <h3>
+                    <h3 id="reseller_credits">
                       <?php 
                           // PHP_HERE 
                           echo $_SESSION['reseller_credits'];
@@ -82,19 +83,20 @@
             </div>
             <div class="columna col-lg-12">
               <div class="form-content">
-                <form action="" method="post">
+                <form id="create_users_form" action="#" method="post">
                   <div class="form-row d-flex justify-content-center flex-wrap">
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Cantidad</label>
-                      <input class="form-control" type="number" name="" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
+                      <input class="form-control" type="number" min="1" id="u_quantity" name="users_quantity" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
                     </div>
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Credits</label>
-                      <input class="form-control" type="number" name="" placeholder="credits"/><small class="form-text text-muted" id="emailHelp">How many credits do you want to assign?</small>
+                      <input class="form-control" type="number" min="1" id="a_credits" name="assigned_credits" placeholder="credits"/><small class="form-text text-muted" id="emailHelp">How many credits do you want to assign?</small>
                     </div>
+                      <input class="form-control invisible" type="hidden" value='<?php echo $_SESSION["reseller_name"]; ?>' name="reseller_name" />
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Cantidad</label>
-                      <button class="btn btn-primary" type="submit">Generate</button>
+                      <button class="btn btn-primary" id="btn_create_users" type="submit">Generate</button>
                     </div>
                   </div>
                 </form>
@@ -153,7 +155,15 @@
       </div>
     </div>
   </body>
-  <script src="http://localhost:4000/assets/js/jquery-3.1.1.min.js"></script>
-  <script src="http://localhost:4000/assets/js/tether.min.js"></script>
-  <script src="http://localhost:4000/assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery-3.1.1.min.js"></script>
+  <script src="assets/js/tether.min.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+
+  <!--  -->
+  <script>
+    // Metodo momentaneo para obtener el nombre del usuario actual.
+      var r_credits ='<?php echo isset($_SESSION["reseller_credits"]) ? $_SESSION["reseller_credits"] : null; ?>';
+  </script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/create_user.js"></script>
 </html>

@@ -89,11 +89,11 @@ class ResellerDAO {
 
     
     // Actualizar creditos del reseller
-    function update_reseller_credits() {
+    function update_reseller_credits($credits) {
 
         $query = "
             UPDATE reseller 
-            SET credits    = :newcredits 
+            SET credits    = (credits - :newcredits) 
             WHERE reseller = :reseller;
         ";
 
@@ -102,11 +102,18 @@ class ResellerDAO {
 
         // Sanitize.
 
-        $this->credits  = htmlspecialchars(strip_tags($this->credits));
+        $this->credits  = htmlspecialchars(strip_tags($credits));
         $this->reseller_name = htmlspecialchars(strip_tags($this->reseller_name));
 
         // Asignando los valores que requiere el query.
         $stmt->bindParam(':newcredits', $this->credits,  PDO::PARAM_STR);
         $stmt->bindParam(':reseller',   $this->reseller_name, PDO::PARAM_INT);
+
+        // Execute the query.
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

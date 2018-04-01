@@ -42,7 +42,7 @@ class generatorUsers {
         $tres = rand(0, 100);
         $username = strtolower($uno . $dos . $tres);
 
-        return $username;
+        return htmlspecialchars(strip_tags($username));
     }
 
     public function generate_password() {
@@ -57,7 +57,7 @@ class generatorUsers {
 
         $pass = ( $num_rand % 2 == 0) ? $num_rand.ucfirst($pass).$num_rand : $num_rand.strrev($pass).$num_rand ;
 
-        return $pass;
+        return htmlspecialchars(strip_tags($pass));
     }
 
     public function get_files($file_name) {

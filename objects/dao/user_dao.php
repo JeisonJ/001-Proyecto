@@ -84,31 +84,10 @@ class UserDAO {
     // Comprobar creditos del reseller
     // Si tiene disponibles generar nombre y contraseña aleatoria e insertar
     // Actualizar creditos del reseller
-    function add_generated_users() {
-
-        $query = "
-            INSERT INTO frpusers (user, password, credits, reseller) 
-            VALUES(
-                :username,
-                :password,
-                :credits,
-                :reseller
-            );"; 
+    function add_generated_users($query) {
 
         // Prepare query.
         $stmt = $this->connection->prepare( $query );
-
-        // Sanitize.
-        $this->user     = htmlspecialchars(strip_tags($this->user_name));
-        $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->credits  = htmlspecialchars(strip_tags($this->credits));
-        $this->reseller = htmlspecialchars(strip_tags($this->reseller));
-
-        // Asignando los valores que requiere el query.
-        $stmt->bindParam(':username', $this->user_name,PDO::PARAM_STR);
-        $stmt->bindParam(':password', $this->password, PDO::PARAM_STR);
-        $stmt->bindParam(':credits',  $this->credits,  PDO::PARAM_INT);
-        $stmt->bindParam(':reseller', $this->reseller_name,PDO::PARAM_STR);
 
         // Ejecutando query.
         if($stmt->execute()) {

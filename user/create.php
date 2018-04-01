@@ -10,59 +10,91 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // Get database connection.
 include_once "../config/database.php";
 include_once "../objects/dao/user_dao.php";
+include_once "../objects/dao/reseller_dao.php";
 include_once "../shared/generator_users.php";
 
 $database = new Database();
 $db = $database->getConnection();
 
 $user = new UserDAO($db);
+// Initialize object.
+$reseller = new ResellerDAO($db);
+
 
 // Get posted data - obtener datos enviados.
 $data = json_decode(file_get_contents("php://input"));
 
 // Set product property values.
-// $user->$credits        = 2000;//$data->name;
-// $user->$reseller_name       = "jose";//$data->price;
-// $user->name        = $data->name;
-// $user->price       = $data->price;
+$assigned_credits         = $data->assigned_credits;
+$reseller->reseller_name  = $data->reseller_name;
+$user->reseller_name      = $reseller->reseller_name;
+$users_quantity           = $data->users_quantity;
+$update_credits = $assigned_credits * $users_quantity;
 
 
-$generate_users = new generatorUsers;
-$users = $generate_users->generateUsers(10);
+// Consultar los datos del reseller
+$stmt = $reseller->read_one_reseller();
 
-$sentencia = array();
-
-for ($i=0; $i < count($users); $i++) { 
-    
-    $user_name = $users[$i][0];
-    $user_pass = $users[$i][1];
-    
-    array_push(
-        $sentencia,
-        "VALUES(
-            $user_name,
-            $user_pass,
-            '2000',
-            'jose'
-        )");
+// Recuperar contenido de la consulta.
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+     $reseller_credits   = $row['credits'];
 }
 
-var_dump($sentencia);
+if ($reseller_credits > $update_credits) {
 
-// Sentencia
-// $sentencia = array(
-//     "INSERT INTO frpusers (user, password, credits, reseller) ", 
-//         "inserts" => array("values"));
+    // Funcion que se encarga de generar usuarios aleatorios.
+    $generate_users = new generatorUsers;
+    $users = $generate_users->generateUsers($users_quantity);
 
-// Create the product.
-// if($product->create()) {
-//     echo '{';
-//         echo '"message": "Product was created."';
-//     echo '}';
-// }
-// // if unable to create the product, tell the user
-// else{
-//     echo '{';
-//         echo '"message": "Unable to create product."';
-//     echo '}';
-// }
+    // Crear la sentencia SQL para insertar los usuarios generados en la base de datos.
+    $sentencia = array();
+
+    for ($i=0; $i < count($users); $i++) { 
+        array_push($sentencia, "\n(
+            '". $users[$i][0] ."',
+            '". $users[$i][1] . "', 
+            '". $assigned_credits . "',
+            '". $reseller->reseller_name ."')" );
+    }
+
+    $query = "INSERT INTO frpusers (user, password, credits, reseller) VALUES" . implode(",", $sentencia); 
+
+
+    // Create the users.
+    if($user->add_generated_users($query)) {
+
+        // Consultar los datos del reseller
+        $reseller->update_reseller_credits($update_credits);
+
+        $stmt = $user->number_users_created();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $total_created = $row["total_created"];
+        }
+
+        $stmt = $reseller->read_one_reseller();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $reseller_credits   = $row['credits'];
+        }
+
+        // Actualizar las variables de sesion.
+        session_start();
+        $_SESSION['reseller_credits']   = $reseller_credits;
+        $_SESSION['users_created']      = $total_created;
+
+        echo '{';
+            echo '"message": "users was created.",
+                  "reseller_credits":"'.$_SESSION['reseller_credits'] .'"';
+        echo '}';
+    }
+    else{
+        echo '{';
+            echo '"message": "Unable to create users."';
+        echo '}';
+    }
+
+} else {
+    echo '{';
+        echo '"message": "No hay suficientes creditos."';
+    echo '}';
+}
+
