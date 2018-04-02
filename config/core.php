@@ -7,7 +7,16 @@ error_reporting(E_ALL);
 
 // URL de la página principal.
 // URL of the main page.
-$home_url = "http://localhost/PHP/WORK/001-Proyecto/";
+
+$data = json_decode(file_get_contents(__DIR__ ."../../config.json"));
+
+if ($data->dev) {
+    $home_url = $data->url->root;
+} else {
+    $home_url = $data->url->envRoot;
+}
+
+//$home_url = "http://localhost/PHP/WORK/001-Proyecto/";
 
 
 // página dada en el parámetro URL, la página por defecto es uno / 1.

@@ -12,3 +12,15 @@ reseller/hola.php
 
 ## Visual Estudio code
 *.code-workspace
+
+## Datos de la conexion estatus dev
+connection_data.inc.php
+/config/connection_data.inc.php
+
+## Objetos sin definir.
+/objects/dto
+/objects/utilities.php
+
+## Archivos de prueba
+/reseller/hola.php
+procesar.php

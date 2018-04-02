@@ -34,6 +34,29 @@
   <body>
     <div class="container-fluid">
       <div class="row">
+
+        <div class="columna col-12">
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Aviso!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5 id="modal-body-text"></h5> 
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="barra-lateral col-12 col-sm-auto">
           <div class="logo">
             <h2>Dashboard</h2>
@@ -87,11 +110,11 @@
                   <div class="form-row d-flex justify-content-center flex-wrap">
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Cantidad</label>
-                      <input class="form-control" type="number" min="1" id="u_quantity" name="users_quantity" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
+                      <input class="form-control" type="number" min="1" value="1" id="u_quantity" name="users_quantity" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
                     </div>
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Credits</label>
-                      <input class="form-control" type="number" min="1" id="a_credits" name="assigned_credits" placeholder="credits"/><small class="form-text text-muted" id="emailHelp">How many credits do you want to assign?</small>
+                      <input class="form-control" type="number" min="1" value="1" id="a_credits" name="assigned_credits" placeholder="credits"/><small class="form-text text-muted" id="emailHelp">How many credits do you want to assign?</small>
                     </div>
                       <input class="form-control invisible" type="hidden" value='<?php echo $_SESSION["reseller_name"]; ?>' name="reseller_name" />
                     <div class="col-auto ml-2 mb-2">
@@ -116,25 +139,8 @@
                         <th scope="col">Credits</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Mark</th>
-                        <th>*sd*f*3</th>
-                        <th>245</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Jacob</th>
-                        <th>143124*3</th>
-                        <th>25</th>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <th>Larry</th>
-                        <th>afaf*3</th>
-                        <th>85</th>
-                      </tr>
+                    <tbody id="users_list">
+                      
                     </tbody>
                   </table>
                 </div>
@@ -150,6 +156,7 @@
                 </ul>
               </nav>
             </div>
+            
           </div>
         </main>
       </div>

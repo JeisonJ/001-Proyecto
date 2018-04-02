@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $("#a_credits, #u_quantity").keyup(function() {
+    $("#a_credits").keyup(function() {
         validar_creditos();
     });
 
@@ -28,9 +28,14 @@ $(document).ready(function() {
 
                 console.log(result);
                 console.log(result.reseller_credits);
+
+                $('#modal-body-text').html(result.message);
+                $('#exampleModalCenter').modal('show');
+
                 // Actualizando los creditos.
                 $("#reseller_credits").html(result.reseller_credits);
                 $('#create_users_form').trigger("reset");
+
             },
             error: function(xhr, resp, text) {
 
@@ -48,7 +53,6 @@ $(document).ready(function() {
 function validar_creditos() {
     var a = $('#u_quantity').val();
     var b = $('#a_credits').val();
-    var c = $("#reseller_credits").val();
     var res = b * a;
 
     var btn = $("#btn_create_users");

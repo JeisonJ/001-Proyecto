@@ -1,20 +1,22 @@
 {
-  "name": "my-app",
-  "version": "0.0.0",
-  "license": "MIT",
-  "description": "",
-  "main": "index.php",
-  "author": "",
-  "url": {
-    "root": "http://localhost/PHP/WORK/001-Proyecto/"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "framework/animations": "^5.2.0"
-  },
-  "devDependencies": {
-    "framework/cli": "1.6.8"
-  }
+    "name": "my-app",
+    "version": "0.0.0",
+    "license": "MIT",
+    "description": "",
+    "main": "index.php",
+    "author": "",
+    "dev": true,
+    "url": {
+        "root": "http://localhost/PHP/WORK/001-Proyecto/",
+        "envRoot": ""
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "framework/animations": "^5.2.0"
+    },
+    "devDependencies": {
+        "framework/cli": "1.6.8"
+    }
 }

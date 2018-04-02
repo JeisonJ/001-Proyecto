@@ -7,7 +7,14 @@ var APP_ROOT;
 
 // Cargar el archivo de configuración.
 $.getJSON("../config.json", function(data) {
-    APP_ROOT = data.url.root;
+
+    // Si estoy en entorno de desarollo.
+    if (data.dev) {
+        APP_ROOT = data.url.root;
+    } else {
+        APP_ROOT = data.url.envRoot;
+    }
+
 });
 
 
