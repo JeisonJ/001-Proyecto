@@ -8,7 +8,7 @@
     "dev": true,
     "url": {
         "root": "http://localhost/PHP/WORK/001-Proyecto/",
-        "envRoot": ""
+        "envRoot": "http://localhost:8080/001-Proyecto/"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
