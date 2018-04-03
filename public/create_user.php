@@ -116,7 +116,7 @@
                       <label class="sr-only" for="">Credits</label>
                       <input class="form-control" type="number" min="1" value="1" id="a_credits" name="assigned_credits" placeholder="credits"/><small class="form-text text-muted" id="emailHelp">How many credits do you want to assign?</small>
                     </div>
-                      <input class="form-control invisible" type="hidden" value='<?php echo $_SESSION["reseller_name"]; ?>' name="reseller_name" />
+                      <input class="form-control invisible" type="hidden" id="res_name" value='<?php echo $_SESSION["reseller_name"]; ?>' name="reseller_name" />
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Cantidad</label>
                       <button class="btn btn-primary" id="btn_create_users" type="submit">Generate</button>
@@ -147,12 +147,9 @@
               </div>
             </div>
             <div class="columna col-g-12">
-              <nav aria-label="Page navigation">
-                <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="">1</a></li>
-                  <li class="page-item"><a class="page-link" href="">2</a></li>
-                  <li class="page-item"><a class="page-link" href="">Next</a></li>
+              <nav aria-label="Page navigation" class="pages">
+                <ul class="pagination" id="pagination_here">
+
                 </ul>
               </nav>
             </div>

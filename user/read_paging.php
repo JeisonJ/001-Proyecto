@@ -26,9 +26,19 @@ $user = new UserDAO($db);
 // Indica el parametro USERNAME a consultar.
 $user->reseller_name = isset($_GET['reseller_name']) ? $_GET['reseller_name'] : die();
 
+if (isset($_GET['users_quantity'])) {
+//     // Query users.
+     $stmt = $user->last_users_added($_GET['users_quantity']);
+     $numm  = $stmt->rowCount();
+
+     $uq = true;
+} else {
+    $uq = false;
+}
 
 // Query users.
 $stmt = $user->readPaging($from_record_num, $records_per_page);
+
 $num  = $stmt->rowCount();
 
 // Check if more than 0 record found.
@@ -53,10 +63,13 @@ if($num>0) {
         array_push($users_array["records"], $user_item);
     }
 
+    $page_url   = "{$home_url}user/read_paging.php?reseller_name=$user->reseller_name";
+    $total_rows = $user->count();
+
     // Include paging.
     // Valores tomados de el archivo core.php
-    $total_rows = $user->count();
-    $page_url   = "{$home_url}user/read_paging.php?reseller_name=$user->reseller_name";
+    $total_rows = ($uq) ? $numm : $total_rows ;
+    $page_url   = ($uq) ? $page_url . "&users_quantity=$users_quantity" : $page_url ;
     $paging     = $utilities->getPaging(
         $page, $total_rows, $records_per_page, $page_url);
     $users_array["paging"] = $paging;

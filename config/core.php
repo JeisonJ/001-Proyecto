@@ -25,5 +25,20 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
 // Numero de resultados por página.
 $records_per_page = 5;
 
-// Calculopara el limite de la sentencia SQL.
-$from_record_num = ($records_per_page * $page) - $records_per_page;
+// Calculo para el limite de la sentencia SQL.
+$from_record_num = ($records_per_page * $page) - $records_per_page;   
+
+if (isset($_GET['users_quantity'])) {
+
+    $users_quantity  = $_GET['users_quantity'];
+
+    if ($records_per_page > $users_quantity) {
+        $records_per_page = $users_quantity;
+    }
+    
+    if ($from_record_num == $users_quantity) {
+        $from_record_num = $users_quantity;
+    } 
+
+} 
+
