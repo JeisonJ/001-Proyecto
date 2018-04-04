@@ -42,8 +42,9 @@
           <nav class="menu d-flex d-sm-block justify-content-center flex-wrap">
             <a href="dashboard.php"> <i class="icon-home"></i><span>Home</span></a>
             <a href="read_users.php"> <i class="icon-users"></i><span>Users</span></a>
-            <a href="#"> <i class="icon-cog"></i><span>Configuration</span></a><a href="#"> 
-            <i class="icon-login"></i><span>Logout</span></a></nav>
+            <a href="#"> <i class="icon-cog"></i><span>Configuration</span></a>
+            <a href="../reseller/logout.php"><i class="icon-login"></i><span>Logout</span></a>
+          </nav>
         </div>
         <main class="col">
           <div class="row">
