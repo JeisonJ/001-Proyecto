@@ -140,9 +140,11 @@ function get_last_users_added($reseller_name, $limit) {
         //echo json_encode($resultados);
         return json_encode($resultados);
     } else {
-        echo json_encode(
-            array('message' => "No se encontraron resultados. reseller_userlist")
-        );
+        // echo json_encode(
+        //     array('message' => "No se encontraron resultados. reseller_userlist")
+        // );
+
+        return null;
     }
 }
 

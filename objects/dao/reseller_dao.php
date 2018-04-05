@@ -9,6 +9,7 @@ class ResellerDAO {
     public $reseller_name;
     public $password;
     public $credits;
+    public $prefix;
     public $last_logon;
     public $status;
 
@@ -54,7 +55,7 @@ class ResellerDAO {
     function read_one_reseller() {
 
         $query = "
-            SELECT id, reseller, credits, lastlogon, status
+            SELECT id, reseller, credits, prefix, lastlogon, status
             FROM reseller 
             WHERE reseller = :reseller;
         "; // AND password   = :password
@@ -73,7 +74,7 @@ class ResellerDAO {
     function read_all_resellers() {
 
         $query = "
-            SELECT id, reseller, credits, lastlogon, status
+            SELECT id, reseller, credits, prefix, lastlogon, status
             FROM reseller;
         ";
 
@@ -106,8 +107,37 @@ class ResellerDAO {
         $this->reseller_name = htmlspecialchars(strip_tags($this->reseller_name));
 
         // Asignando los valores que requiere el query.
-        $stmt->bindParam(':newcredits', $this->credits,  PDO::PARAM_STR);
-        $stmt->bindParam(':reseller',   $this->reseller_name, PDO::PARAM_INT);
+        $stmt->bindParam(':newcredits', $this->credits,  PDO::PARAM_INT);
+        $stmt->bindParam(':reseller',   $this->reseller_name, PDO::PARAM_STR);
+
+        // Execute the query.
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Actualizar creditos del reseller
+    function update_reseller_prefix() {
+        
+        $query = "
+            UPDATE reseller 
+            SET prefix    = :prefix 
+            WHERE reseller = :reseller;
+        ";
+
+        // Prepare query.
+        $stmt = $this->connection->prepare( $query );
+
+        // Sanitize.
+
+        $this->prefix  = htmlspecialchars(strip_tags($this->prefix));
+        $this->reseller_name = htmlspecialchars(strip_tags($this->reseller_name));
+
+        // Asignando los valores que requiere el query.
+        $stmt->bindParam(':prefix',     $this->prefix,  PDO::PARAM_STR);
+        $stmt->bindParam(':reseller',   $this->reseller_name, PDO::PARAM_STR);
 
         // Execute the query.
         if ($stmt->execute()) {

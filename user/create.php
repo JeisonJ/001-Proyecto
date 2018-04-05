@@ -40,10 +40,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
      $reseller_credits   = $row['credits'];
 }
 
+session_start();
+
 if ($reseller_credits > $update_credits) {
 
     // Funcion que se encarga de generar usuarios aleatorios.
-    $generate_users = new generatorUsers;
+    $generate_users = new generatorUsers($_SESSION["reseller_name"], $_SESSION['reseller_prefix']);
     $users = $generate_users->generateUsers($users_quantity);
 
     // Crear la sentencia SQL para insertar los usuarios generados en la base de datos.
@@ -77,7 +79,7 @@ if ($reseller_credits > $update_credits) {
         }
 
         // Actualizar las variables de sesion.
-        session_start();
+        
         $_SESSION['reseller_credits']   = $reseller_credits;
         $_SESSION['users_created']      = $total_created;
 

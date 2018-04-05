@@ -234,3 +234,7 @@ main .widget {
 .pages {
     cursor: pointer;
 }
+
+.text-upper {
+    text-transform: uppercase;
+}

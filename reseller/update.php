@@ -9,14 +9,14 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // Include database and objects files.
 include_once "../config/database.php";
-include_once "../objects/reseller.php";
+include_once "../objects/dao/reseller_dao.php";
 
 // Instantiate database and PorAmbito object.
 $database = new Database;
 $db       = $database->getConnection();
 
 // Initialize object.
-$reseller = new Reseller($db);
+$reseller = new ResellerDAO($db);
 
 /**
  * Obtener datos enviados por medio del POST en formato json.
@@ -27,15 +27,18 @@ $data = json_decode(file_get_contents("php://input"));
 
 // ID que se usará para indicar el registro a editar.
 $reseller->reseller_name = $data->reseller_name;
+$reseller->prefix = $data->user_prefix;
 
-// Establecer valores
-$reseller->credits = $data->credits;
 
 // Ejecutar actualización.
-if ($reseller->update_reseller_credits()) {
+if ($reseller->update_reseller_prefix()) {
     echo json_encode(
         array('message' => "Registro actualizado con exito.")
     );
+
+    session_start();
+    $_SESSION['reseller_prefix'] = $reseller->prefix;
+
 } else {
     // Si no se ha podido realizar el registro, avisar el usuario. 
     echo json_encode(

@@ -4643,30 +4643,54 @@ INSERT INTO `frpusers` (`id`,`user`,`password`,`credits`,`reseller`,`lastuid`) V
 -- Definition of table `reseller`
 --
 
+-- DROP TABLE IF EXISTS `reseller`;
+-- CREATE TABLE `reseller` (
+--   `id` int(10) NOT NULL AUTO_INCREMENT,
+--   `reseller` varchar(20) NOT NULL DEFAULT '',
+--   `password` varchar(10) NOT NULL DEFAULT '',
+--   `credits` int(10) NOT NULL DEFAULT '0',
+--   `lastlogon` varchar(10) NOT NULL DEFAULT '',
+--   `status` char(1) NOT NULL DEFAULT '1',
+--   PRIMARY KEY (`id`),
+--   UNIQUE KEY `resell_idx` (`reseller`)
+-- ) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 DROP TABLE IF EXISTS `reseller`;
 CREATE TABLE `reseller` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `reseller` varchar(20) NOT NULL DEFAULT '',
   `password` varchar(10) NOT NULL DEFAULT '',
   `credits` int(10) NOT NULL DEFAULT '0',
+  `prefix` VARCHAR(8) NOT NULL,
   `lastlogon` varchar(10) NOT NULL DEFAULT '',
   `status` char(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `resell_idx` (`reseller`)
-) ENGINE=MyISAM AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
-
+  UNIQUE KEY `prefix` (`prefix`),
+  UNIQUE KEY `name` (`reseller`)
+) ENGINE=INNODB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 --
 -- Dumping data for table `reseller`
 --
 
+INSERT INTO `reseller` (`id`,`reseller`,`password`,`credits`, `prefix`,`lastlogon`,`status`) VALUES 
+ (45,'jose','iberiagsm$',9995,'RTM45-','','1'),
+ (46,'123unlock','srs2017',9988,'RTM56-','','1'),
+ (52,'RTHOMAS','RTHOMAS$',1000,'RTM52-','','1'),
+ (51,'Kashadmin','kashan$$',9990,'RTM51-','','1');
+
 /*!40000 ALTER TABLE `reseller` DISABLE KEYS */;
-INSERT INTO `reseller` (`id`,`reseller`,`password`,`credits`,`lastlogon`,`status`) VALUES 
- (45,'jose','iberiagsm$',9995,'','1'),
- (46,'123unlock','srs2017',9988,'','1'),
- (52,'RTHOMAS','RTHOMAS$',1000,'','1'),
- (51,'Kashadmin','kashan$$',9990,'','1');
+-- INSERT INTO `reseller` (`id`,`reseller`,`password`,`credits`,`lastlogon`,`status`) VALUES 
+--  (45,'jose','iberiagsm$',9995,'','1'),
+--  (46,'123unlock','srs2017',9988,'','1'),
+--  (52,'RTHOMAS','RTHOMAS$',1000,'','1'),
+--  (51,'Kashadmin','kashan$$',9990,'','1');
 /*!40000 ALTER TABLE `reseller` ENABLE KEYS */;
 
+-- ALTER TABLE `reseller`
+--   ADD PRIMARY KEY (`id`),
+--   ADD UNIQUE KEY `prefix` (`prefix`),
+--   ADD UNIQUE KEY `name` (`reseller`);
+
+ALTER TABLE `reseller` ADD `prefix` VARCHAR(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL AFTER `credits`, ADD UNIQUE `prefix` (`prefix`);
+ALTER TABLE `frp`.`reseller` DROP INDEX `resell_idx`, ADD UNIQUE `resell_idx` (`reseller`, `prefix`(8)) USING BTREE;
 --
 -- Create schema qcomhash
 --

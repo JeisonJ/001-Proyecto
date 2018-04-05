@@ -1,26 +1,41 @@
 <?php
 
+// Include database and objects files.
+include_once "../user/read_one.php";
+
+
 class generatorUsers {
     private $dir = __DIR__."/data/";
     private $last_name = "last-names.txt";
     private $male_name = "male-names.txt";
     private $word = "word.txt";
+
+    public $username;
+    public $prefix;
+
+    public function __construct($username, $prefix) {
+        $this->username = $username;
+        $this->prefix   = $prefix;
+    }
     
 
     public function generateUsers($length) {
         $users = array();
 
+        $x = 0;
         for ($i=0; $i < $length; $i++) { 
             $users[$i] = array(
-                $this->generate_username(),
+                $this->generate_username($x),
                 $this->generate_password()
             );
+
+            $x++;
         }
 
         return $users;
     }
 
-    public function generate_username() {
+    public function generate_username(int $x) {
 
         srand((double)microtime()*1000000); 
         /**
@@ -29,18 +44,21 @@ class generatorUsers {
          * 3. unirlas
          */
         // 1
-        $m_names = $this->get_files($this->male_name);
-        $l_names = $this->get_files($this->last_name);
+        // $m_names = $this->get_files($this->male_name);
+        // $l_names = $this->get_files($this->last_name);
 
-        $num_names = count($m_names);
-        $num_lnames = count($l_names);
+        // $num_names = count($m_names);
+        // $num_lnames = count($l_names);
+
+        $users_created = get_number_users_created($this->username);
+        $users_created += 1;
         
-        $username = "";
+        $username = $this->prefix ."-". ($users_created + $x);
 
-        $uno = rtrim(substr($m_names[rand(0, $num_names - 1)], 0, 8)); 
-        $dos = substr($l_names[rand(0, $num_lnames - 1)], 0, 2);
-        $tres = rand(0, 100);
-        $username = strtolower($uno . $dos . $tres);
+        // $uno = rtrim(substr($m_names[rand(0, $num_names - 1)], 0, 8)); 
+        // $dos = substr($l_names[rand(0, $num_lnames - 1)], 0, 2);
+        // $tres = rand(0, 100);
+        // $username = strtolower($uno . $dos . $tres);
 
         return htmlspecialchars(strip_tags($username));
     }

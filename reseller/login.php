@@ -58,6 +58,7 @@ if (isset($_POST['btn-login'])) {
                     $_SESSION['reseller_id']        = $row['id'];
                     $_SESSION["reseller_name"]      = $row["reseller"];
                     $_SESSION['reseller_credits']   = $row['credits'];
+                    $_SESSION['reseller_prefix']    = $row['prefix'];
                     $_SESSION['reseller_lastlogon'] = $row['lastlogon'];
                     $_SESSION['reseller_status']    = $row['status'];
                     $_SESSION['users_created']      = $users_created;

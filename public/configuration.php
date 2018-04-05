@@ -15,9 +15,6 @@
      */
     ($_SESSION['session_start']) ?  : header('Location: ../index.php');
 
-    // Datos para la tabla ultimos usuarios.
-    include_once '../user/read_one.php';
-    $last_users_added = json_decode(get_last_users_added($_SESSION["reseller_name"], 5));
 ?>
 
     <!DOCTYPE html>
@@ -63,41 +60,10 @@
                         </div>
                         <div class="columna col-lg-7">
                             <div class="widget nueva_entrada">
-                                <h3 class="titulo">Information panel</h3>
+                                <h3 class="titulo">Configuration panel</h3>
                                 <hr/>
                                 <div class="information">
-                                    <p>By using this portal you can create end-users for our services.</p>
-                                </div>
-                                <h4 class="titulo">Last 5 users created </h4>
-                                <hr/>
-                                <div class="tabla">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Username</th>
-                                                <th scope="col">Password</th>
-                                                <th scope="col">Credits</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                                // PHP_HERE 
-                                                if ($last_users_added) {
-                                                    foreach ($last_users_added as $user) {
-                                                        echo "
-                                                            <tr>
-                                                                <td scope='row'>$user->user_id</td>
-                                                                <td>$user->user_name</td>
-                                                                <td>$user->user_pass</td>
-                                                                <td>$user->user_credits</td>
-                                                            </tr>
-                                                        ";
-                                                    }
-                                                }
-                                            ?>
-                                        </tbody>
-                                    </table>
+                                    <p>Edit Profile</p>
                                 </div>
                             </div>
                         </div>
@@ -125,18 +91,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget comentarios">
-                                <h4 class="titulo">Log (Last 5)</h4>
-                                <div class="contenedor">
-                                    <div class="comentario d-flex flex-wrap">
-                                        <div class="texto alert alert-danger">
-                                            <p class="texto-comentario">26-03-2018 1:31:36;::1;reseller: Failed to Login on the portal Failed to Login on the portal</p>
+                        </div>
+                        <div class="columna col-lg-7">
+                            <div class="form-content">
+                                <form action="#" method="post" id="update-user-form">
+                                    <div class="row">
+                                        <div class="col-md-5 col-lg-5 pr-1">
+                                            <small class="form-group">
+                                                <label>Prefix</label>
+                                                <input id="text-upper" type="text" class="form-control" placeholder="Example: RTM-" name="user_prefix" maxlength="8" value="<?php echo $_SESSION["reseller_prefix"]; ?>" aria-describedby="prefixHelpBlock">
+                                                <small id="prefixHelpBlock" class="form-text text-muted text-info">
+                                                    Max length!
+                                                </small>
+                                                <input class="form-control invisible" type="hidden" id="res_name" value='<?php echo $_SESSION["reseller_name"]; ?>' name="reseller_name" />
+                                            </div>
                                         </div>
-                                        <div class="texto alert alert-success">
-                                            <p class="texto-comentario">26-03-2018 2:30:51;186.95.192.103;jose;add;23;SAMUSER0143</p>
+                                        <div class="col-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-info">Update Profile</button>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -148,4 +122,6 @@
     <script src="assets/js/tether.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
 
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/configuration.js"></script>
     </html>
