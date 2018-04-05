@@ -111,7 +111,7 @@
                   <div class="form-row d-flex justify-content-center flex-wrap">
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Cantidad</label>
-                      <input class="form-control" type="number" min="1" value="1" id="u_quantity" name="users_quantity" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
+                      <input class="form-control" type="number" min="1" max="10000" value="1" id="u_quantity" name="users_quantity" placeholder="number of users"/><small class="form-text text-muted" id="emailHelp">How many users do you want to create?</small>
                     </div>
                     <div class="col-auto ml-2 mb-2">
                       <label class="sr-only" for="">Credits</label>

@@ -4,6 +4,10 @@ $(document).ready(function() {
         validar_creditos();
     });
 
+    $("#u_quantity").keyup(function() {
+        validar_max_user();
+    });
+
     // Cuando la paginación sea pulsada.
     $(document).on('submit', '#create_users_form', function() {
         event.preventDefault();
@@ -144,6 +148,24 @@ function validar_creditos() {
 
     if (res > r_credits || a <= 0 || b <= 0) {
         alert("creditos insuficientes");
+        btn.prop('disabled', true);
+    } else {
+        btn.prop('disabled', false);
+    }
+}
+
+function validar_max_user() {
+    var a = $('#u_quantity').val();
+
+    var btn = $("#btn_create_users");
+
+
+    // Variable en read_user.php
+    console.log(a);
+
+    if (a > 10000) {
+        alert("Limite de usuarios 10.000, ingrese una cantidad menor");
+        $('#u_quantity').val(1);
         btn.prop('disabled', true);
     } else {
         btn.prop('disabled', false);

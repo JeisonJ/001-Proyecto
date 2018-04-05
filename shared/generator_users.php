@@ -1,5 +1,13 @@
 <?php
 
+// Get database connection.
+// include_once "../config/database.php";
+// include_once "../objects/dao/user_dao.php";
+
+// $database = new Database();
+// $db = $database->getConnection();
+
+// $user = new UserDAO($db);
 // Include database and objects files.
 include_once "../user/read_one.php";
 
@@ -21,11 +29,13 @@ class generatorUsers {
 
     public function generateUsers($length) {
         $users = array();
+        $users_created = get_number_users_created($this->username);
+        $users_created += 1;
 
         $x = 0;
         for ($i=0; $i < $length; $i++) { 
             $users[$i] = array(
-                $this->generate_username($x),
+                $this->prefix . ($users_created + $x),
                 $this->generate_password()
             );
 
@@ -35,9 +45,9 @@ class generatorUsers {
         return $users;
     }
 
-    public function generate_username(int $x) {
+    public function generate_username() {
 
-        srand((double)microtime()*1000000); 
+        //srand((double)microtime()*1000000); 
         /**
          * 1. obtener los archivos last y male
          * 2. obtener las primeras 3 letras, las tres ultimas
@@ -50,10 +60,9 @@ class generatorUsers {
         // $num_names = count($m_names);
         // $num_lnames = count($l_names);
 
-        $users_created = get_number_users_created($this->username);
-        $users_created += 1;
         
-        $username = $this->prefix ."-". ($users_created + $x);
+        //$username = $this->prefix ."-". ($users_created + $x);
+        $username = $this->prefix;
 
         // $uno = rtrim(substr($m_names[rand(0, $num_names - 1)], 0, 8)); 
         // $dos = substr($l_names[rand(0, $num_lnames - 1)], 0, 2);
